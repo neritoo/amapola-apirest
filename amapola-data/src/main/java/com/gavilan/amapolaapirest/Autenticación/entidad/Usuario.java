@@ -1,6 +1,7 @@
 package com.gavilan.amapolaapirest.Autenticación.entidad;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "usuarios")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,7 +48,7 @@ public class Usuario implements Serializable {
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id", "rol_id"})})
-    private List<Rol> role;
+    private List<Rol> roles;
 
     private boolean enabled;
 }
