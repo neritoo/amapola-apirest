@@ -28,7 +28,7 @@ public class JwtProveedor {
     public void init() {
         try {
             keyStore = KeyStore.getInstance("JKS");
-            InputStream resourceAsStream = getClass().getResourceAsStream("/token.jks");
+            InputStream resourceAsStream = getClass().getResourceAsStream("/springblog.jks");
             keyStore.load(resourceAsStream, "secret".toCharArray());
 
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
@@ -62,7 +62,7 @@ public class JwtProveedor {
 
     private PrivateKey getPrivateKey() {
         try {
-            return (PrivateKey) keyStore.getKey("token", "secret".toCharArray());
+            return (PrivateKey) keyStore.getKey("springblog", "secret".toCharArray());
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e ) {
             throw new com.gavilan.amapolaapirest.Excepciones.KeyStoreException("Excepción al obtener la private key del keystore");
         }
@@ -70,7 +70,7 @@ public class JwtProveedor {
 
     private PublicKey getPublicKey() {
         try {
-            return keyStore.getCertificate("token").getPublicKey();
+            return keyStore.getCertificate("springblog").getPublicKey();
         } catch (KeyStoreException e) {
             throw new com.gavilan.amapolaapirest.Excepciones.KeyStoreException("Excepción al obtener la public key del keystore");
         }

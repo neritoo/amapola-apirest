@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
-    private Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     @Override
     @Transactional(readOnly = true)
