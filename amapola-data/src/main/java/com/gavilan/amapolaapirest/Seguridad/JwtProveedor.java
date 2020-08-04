@@ -41,6 +41,7 @@ public class JwtProveedor {
 
         return Jwts.builder()
                 .setSubject(principal.getUsername())
+                .claim("Authorities", principal.getAuthorities())
                 .signWith(getPrivateKey())
                 .setExpiration(new Date(new Date().getTime() + jwtExpirationInMillis))
                 .compact();
