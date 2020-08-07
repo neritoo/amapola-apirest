@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @AllArgsConstructor
 public class ControladorIniciarSesion {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public AuthResponse iniciarSesion(@RequestBody UsuarioRequest usuarioRequest) {
 
         return this.authService.iniciarSesion(usuarioRequest);

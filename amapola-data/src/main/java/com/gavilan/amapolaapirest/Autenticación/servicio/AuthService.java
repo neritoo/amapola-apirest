@@ -15,4 +15,6 @@ public interface AuthService {
 
     void cerrarSesion(RefrescarTokenRequest refrescarTokenRequest);
 
+    boolean estaLogueado();
+
 }

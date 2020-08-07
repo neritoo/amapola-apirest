@@ -8,12 +8,14 @@ import com.gavilan.amapolaapirest.Autenticación.repositorio.UsuarioRepository;
 import com.gavilan.amapolaapirest.Excepciones.UsuarioException;
 import com.gavilan.amapolaapirest.Seguridad.JwtProveedor;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -25,13 +27,13 @@ import java.util.Date;
 @AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    // private final PasswordEncoder passwordEncoder;
     private final RefrescarTokenService refrescarTokenService;
     private final AuthenticationManager authenticationManager;
     private final JwtProveedor jwtProveedor;
     private final UsuarioRepository usuarioRepository;
 
     @Override
+    @Transactional
     public AuthResponse iniciarSesion(UsuarioRequest usuarioRequest) {
         Authentication authenticate = this.authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(usuarioRequest.getUsername(),
@@ -66,7 +68,19 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse refrescarToken(RefrescarTokenRequest refrescarTokenRequest) {
-        return null;
+
+        this.refrescarTokenService.validarRefreshToken(refrescarTokenRequest.getRefreshToken());
+
+        String token = jwtProveedor.generarTokenConUsername(refrescarTokenRequest.getUsername());
+
+        AuthResponse authResponse = new AuthResponse();
+
+        authResponse.setAuthToken(token);
+        authResponse.setRefreshToken(refrescarTokenRequest.getRefreshToken());
+        authResponse.setUsername(refrescarTokenRequest.getUsername());
+        authResponse.setExpiraEn(new Date(new Date().getTime() + this.jwtProveedor.getJwtExpirationInMillis()));
+
+        return authResponse;
     }
 
     @Override
@@ -77,5 +91,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void cerrarSesion(RefrescarTokenRequest refrescarTokenRequest) {
 
+    }
+
+    @Override
+    public boolean estaLogueado() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     }
 }
