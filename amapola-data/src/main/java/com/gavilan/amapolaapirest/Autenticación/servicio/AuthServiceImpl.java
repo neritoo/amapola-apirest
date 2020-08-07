@@ -2,12 +2,14 @@ package com.gavilan.amapolaapirest.Autenticación.servicio;
 
 import com.gavilan.amapolaapirest.Autenticación.dto.AuthResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenRequest;
+import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.UsuarioRequest;
 import com.gavilan.amapolaapirest.Autenticación.entidad.Usuario;
 import com.gavilan.amapolaapirest.Autenticación.repositorio.UsuarioRepository;
+import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
 import com.gavilan.amapolaapirest.Excepciones.UsuarioException;
 import com.gavilan.amapolaapirest.Seguridad.JwtProveedor;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,13 +26,20 @@ import java.util.Date;
  **/
 
 @Service
-@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     private final RefrescarTokenService refrescarTokenService;
     private final AuthenticationManager authenticationManager;
     private final JwtProveedor jwtProveedor;
     private final UsuarioRepository usuarioRepository;
+
+    @Autowired
+    public AuthServiceImpl(RefrescarTokenService refrescarTokenService, AuthenticationManager authenticationManager, JwtProveedor jwtProveedor, UsuarioRepository usuarioRepository) {
+        this.refrescarTokenService = refrescarTokenService;
+        this.authenticationManager = authenticationManager;
+        this.jwtProveedor = jwtProveedor;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     @Transactional
@@ -67,30 +76,38 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public AuthResponse refrescarToken(RefrescarTokenRequest refrescarTokenRequest) {
+    public RefrescarTokenResponse refrescarToken(RefrescarTokenRequest refrescarTokenRequest) {
 
         this.refrescarTokenService.validarRefreshToken(refrescarTokenRequest.getRefreshToken());
 
         String token = jwtProveedor.generarTokenConUsername(refrescarTokenRequest.getUsername());
 
-        AuthResponse authResponse = new AuthResponse();
+        RefrescarTokenResponse tokenResponse = new RefrescarTokenResponse();
+        tokenResponse.setUsername(refrescarTokenRequest.getUsername());
+        tokenResponse.setAuthToken(token);
+        tokenResponse.setRefreshToken(refrescarTokenRequest.getRefreshToken());
+        tokenResponse.setExpiraEn(new Date(new Date().getTime() + this.jwtProveedor.getJwtExpirationInMillis()));
 
-        authResponse.setAuthToken(token);
-        authResponse.setRefreshToken(refrescarTokenRequest.getRefreshToken());
-        authResponse.setUsername(refrescarTokenRequest.getUsername());
-        authResponse.setExpiraEn(new Date(new Date().getTime() + this.jwtProveedor.getJwtExpirationInMillis()));
-
-        return authResponse;
+        return tokenResponse;
     }
 
     @Override
-    public User getCurrentUser() {
-        return null;
+    public Usuario getCurrentUser() {
+
+        if (this.estaLogueado()) {
+            User usuarioLogueado = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return this.usuarioRepository.findByUsername(usuarioLogueado.getUsername())
+                    .orElseThrow(() -> new UsuarioException("Usuario no encontrado: ".concat(usuarioLogueado.getUsername())));
+        } else {
+            throw new RefreshTokenException("No hay un usuario logueado");
+        }
     }
 
     @Override
     public void cerrarSesion(RefrescarTokenRequest refrescarTokenRequest) {
 
+        this.refrescarTokenService.validarRefreshToken(refrescarTokenRequest.getRefreshToken());
+        this.refrescarTokenService.eliminarRefreshToken(refrescarTokenRequest.getRefreshToken());
     }
 
     @Override

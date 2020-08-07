@@ -1,11 +1,10 @@
 package com.gavilan.amapolaapirest.Autenticación.controladores;
 
-import com.gavilan.amapolaapirest.Autenticación.dto.AuthResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenRequest;
+import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenResponse;
 import com.gavilan.amapolaapirest.Autenticación.servicio.AuthService;
-import com.gavilan.amapolaapirest.Autenticación.servicio.RefrescarTokenService;
 import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@Slf4j
 public class ControladorRefrescarToken {
 
     private final AuthService authService;
@@ -31,16 +31,17 @@ public class ControladorRefrescarToken {
     public ResponseEntity<?> refrescarTokens(@Valid @RequestBody RefrescarTokenRequest refrescarTokenRequest) {
 
         Map<String, Object> response = new HashMap<>();
-        AuthResponse authResponse;
+        RefrescarTokenResponse tokenResponse;
 
         try {
-            authResponse = this.authService.refrescarToken(refrescarTokenRequest);
+            tokenResponse = this.authService.refrescarToken(refrescarTokenRequest);
         } catch (RefreshTokenException e) {
             response.put("mensaje", "Error al refrescar token");
             response.put("error", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<>(authResponse, HttpStatus.OK);
+
+        return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
     }
 }
