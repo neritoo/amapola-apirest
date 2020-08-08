@@ -1,5 +1,6 @@
 package com.gavilan.amapolaapirest.Autenticación.dto;
 
+import com.gavilan.amapolaapirest.Autenticación.entidad.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class AuthResponse {
 
     private String email;
 
-    private List<String> roles;
+    private List<Rol> roles;
 
     public AuthResponse() {
         this.roles = new ArrayList<>();

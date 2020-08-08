@@ -67,10 +67,7 @@ public class AuthServiceImpl implements AuthService {
                 this.jwtProveedor.getJwtExpirationInMillis()));
         authResponse.setUsername(usuario.getUsername());
         authResponse.setEmail(usuario.getEmail());
-
-        for (int i=0; i < usuario.getRoles().size(); i++) {
-           authResponse.getRoles().add(usuario.getRoles().get(i).getNombre());
-        }
+        authResponse.setRoles(usuario.getRoles());
 
         return authResponse;
     }
