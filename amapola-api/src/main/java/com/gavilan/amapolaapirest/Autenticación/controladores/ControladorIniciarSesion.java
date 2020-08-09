@@ -2,7 +2,7 @@ package com.gavilan.amapolaapirest.Autenticación.controladores;
 
 import com.gavilan.amapolaapirest.Autenticación.dto.AuthResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.UsuarioRequest;
-import com.gavilan.amapolaapirest.Autenticación.servicio.AuthService;
+import com.gavilan.amapolaapirest.Autenticación.servicios.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

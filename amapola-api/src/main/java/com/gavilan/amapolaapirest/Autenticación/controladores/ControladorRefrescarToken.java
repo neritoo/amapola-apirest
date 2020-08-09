@@ -2,7 +2,7 @@ package com.gavilan.amapolaapirest.Autenticación.controladores;
 
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenRequest;
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenResponse;
-import com.gavilan.amapolaapirest.Autenticación.servicio.AuthService;
+import com.gavilan.amapolaapirest.Autenticación.servicios.AuthService;
 import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

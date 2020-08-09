@@ -1,7 +1,7 @@
-package com.gavilan.amapolaapirest.Autenticación.servicio;
+package com.gavilan.amapolaapirest.Autenticación.servicios;
 
-import com.gavilan.amapolaapirest.Autenticación.entidad.RefreshToken;
-import com.gavilan.amapolaapirest.Autenticación.repositorio.RefreshTokenRepository;
+import com.gavilan.amapolaapirest.Autenticación.dominio.RefreshToken;
+import com.gavilan.amapolaapirest.Autenticación.repositorios.RefreshTokenRepository;
 import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

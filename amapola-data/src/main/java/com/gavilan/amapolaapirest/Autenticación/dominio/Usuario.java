@@ -1,4 +1,4 @@
-package com.gavilan.amapolaapirest.Autenticación.entidad;
+package com.gavilan.amapolaapirest.Autenticación.dominio;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +17,7 @@ import java.util.List;
 @Table(name = "usuarios")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario implements Serializable {
-
-    private final static long serialVersionUID = 1L;
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

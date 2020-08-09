@@ -1,7 +1,7 @@
 package com.gavilan.amapolaapirest.Autenticación.controladores;
 
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenRequest;
-import com.gavilan.amapolaapirest.Autenticación.servicio.AuthService;
+import com.gavilan.amapolaapirest.Autenticación.servicios.AuthService;
 import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

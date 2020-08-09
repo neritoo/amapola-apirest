@@ -1,6 +1,6 @@
-package com.gavilan.amapolaapirest.Autenticación.servicio;
+package com.gavilan.amapolaapirest.Autenticación.servicios;
 
-import com.gavilan.amapolaapirest.Autenticación.entidad.RefreshToken;
+import com.gavilan.amapolaapirest.Autenticación.dominio.RefreshToken;
 
 public interface RefrescarTokenService {
 

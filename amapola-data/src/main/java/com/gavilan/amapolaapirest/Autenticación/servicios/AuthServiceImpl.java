@@ -1,11 +1,11 @@
-package com.gavilan.amapolaapirest.Autenticación.servicio;
+package com.gavilan.amapolaapirest.Autenticación.servicios;
 
+import com.gavilan.amapolaapirest.Autenticación.dominio.Usuario;
 import com.gavilan.amapolaapirest.Autenticación.dto.AuthResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenRequest;
 import com.gavilan.amapolaapirest.Autenticación.dto.RefrescarTokenResponse;
 import com.gavilan.amapolaapirest.Autenticación.dto.UsuarioRequest;
-import com.gavilan.amapolaapirest.Autenticación.entidad.Usuario;
-import com.gavilan.amapolaapirest.Autenticación.repositorio.UsuarioRepository;
+import com.gavilan.amapolaapirest.Autenticación.repositorios.UsuarioRepository;
 import com.gavilan.amapolaapirest.Excepciones.RefreshTokenException;
 import com.gavilan.amapolaapirest.Excepciones.UsuarioException;
 import com.gavilan.amapolaapirest.Seguridad.JwtProveedor;

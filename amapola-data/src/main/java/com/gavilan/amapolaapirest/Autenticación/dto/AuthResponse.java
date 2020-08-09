@@ -1,6 +1,6 @@
 package com.gavilan.amapolaapirest.Autenticación.dto;
 
-import com.gavilan.amapolaapirest.Autenticación.entidad.Rol;
+import com.gavilan.amapolaapirest.Autenticación.dominio.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
-package com.gavilan.amapolaapirest.Autenticación.repositorio;
+package com.gavilan.amapolaapirest.Autenticación.repositorios;
 
-import com.gavilan.amapolaapirest.Autenticación.entidad.RefreshToken;
+import com.gavilan.amapolaapirest.Autenticación.dominio.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

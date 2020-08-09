@@ -1,7 +1,7 @@
-package com.gavilan.amapolaapirest.Autenticación.servicio;
+package com.gavilan.amapolaapirest.Autenticación.servicios;
 
-import com.gavilan.amapolaapirest.Autenticación.entidad.Usuario;
-import com.gavilan.amapolaapirest.Autenticación.repositorio.UsuarioRepository;
+import com.gavilan.amapolaapirest.Autenticación.dominio.Usuario;
+import com.gavilan.amapolaapirest.Autenticación.repositorios.UsuarioRepository;
 import com.gavilan.amapolaapirest.Excepciones.UsuarioException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
