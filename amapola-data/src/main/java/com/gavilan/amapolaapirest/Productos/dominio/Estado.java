@@ -4,19 +4,21 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.io.Serializable;
+import javax.persistence.Inheritance;
 
 /**
  * @author Ezequiel Gavilán
  */
 
 @Entity
+@Inheritance
 @Data
-public abstract class Estado implements Serializable {
-
-    private final static long serialVersionUID = 1L;
+public abstract class Estado {
 
     @Id
-    private String nombre;
+    protected String nombre;
 
+    public abstract void descontarStock();
+
+    public abstract void aumentarStock();
 }
