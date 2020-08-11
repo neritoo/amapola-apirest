@@ -42,11 +42,8 @@ public class Producto implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Bolsa bolsa;
 
-    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JoinColumn(name = "nombre")
     private Estado estado;
-
-     */
 }
