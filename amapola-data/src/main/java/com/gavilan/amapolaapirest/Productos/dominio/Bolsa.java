@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author Ezequiel Gavilán
  */
 
-@Entity
+@Entity(name = "bolsas")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

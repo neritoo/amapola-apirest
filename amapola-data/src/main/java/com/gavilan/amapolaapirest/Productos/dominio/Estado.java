@@ -10,7 +10,7 @@ import javax.persistence.Inheritance;
  * @author Ezequiel Gavilán
  */
 
-@Entity
+@Entity(name = "estados")
 @Inheritance
 @Data
 public abstract class Estado {

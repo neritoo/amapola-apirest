@@ -14,7 +14,7 @@ import java.util.Date;
  * @author Ezequiel Gavilán
  */
 
-@Entity
+@Entity(name = "productos")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +32,9 @@ public class Producto implements Serializable {
     @NotNull
     private Integer stock;
 
+    @NotNull
+    private Double precio;
+
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     @NotNull
@@ -44,6 +47,20 @@ public class Producto implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JoinColumn(name = "nombre")
+    @JoinColumn(name = "estado_nombre")
     private Estado estado;
+
+    public Integer getBolsas() {
+
+        if (bolsa == null) {
+            return null;
+        }
+
+        return this.calcularCantidadBolsas(this.bolsa.getCapacidad(), this.stock);
+    }
+
+    private Integer calcularCantidadBolsas(Integer capacidad, Integer stock) {
+
+        return stock / capacidad;
+    }
 }
