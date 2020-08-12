@@ -2,9 +2,11 @@ package com.gavilan.amapolaapirest.Productos.servicios;
 
 import com.gavilan.amapolaapirest.Excepciones.ProductoException;
 import com.gavilan.amapolaapirest.Productos.dominio.Bolsa;
+import com.gavilan.amapolaapirest.Productos.dominio.Categoria;
 import com.gavilan.amapolaapirest.Productos.dominio.EnStock;
 import com.gavilan.amapolaapirest.Productos.dominio.Producto;
 import com.gavilan.amapolaapirest.Productos.repositorios.BolsaRepository;
+import com.gavilan.amapolaapirest.Productos.repositorios.CategoriaRepository;
 import com.gavilan.amapolaapirest.Productos.repositorios.ProductoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,12 @@ public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
     private final BolsaRepository bolsaRepository;
+    private final CategoriaRepository categoriaRepository;
 
-    public ProductoServiceImpl(ProductoRepository productoRepository, BolsaRepository bolsaRepository) {
+    public ProductoServiceImpl(ProductoRepository productoRepository, BolsaRepository bolsaRepository, CategoriaRepository categoriaRepository) {
         this.productoRepository = productoRepository;
         this.bolsaRepository = bolsaRepository;
+        this.categoriaRepository = categoriaRepository;
     }
 
     @Transactional
@@ -45,6 +49,9 @@ public class ProductoServiceImpl implements ProductoService {
         }
          */
 
+        Categoria categoria = this.categoriaRepository.findById(producto.getCategoria().getId())
+                .orElseThrow(() -> new ProductoException("No existe la categoría" + producto.getCategoria().getNombre()));
+
         Producto nuevoProducto = new Producto();
 
         nuevoProducto.setNombre(producto.getNombre());
@@ -53,7 +60,7 @@ public class ProductoServiceImpl implements ProductoService {
         nuevoProducto.setBolsa(bolsa);
         nuevoProducto.setPrecio(producto.getPrecio());
         // nuevoProducto.setTipoPrecio(tipoPrecio);
-        nuevoProducto.setCategoria(producto.getCategoria());
+        nuevoProducto.setCategoria(categoria);
         nuevoProducto.setEstado(new EnStock());
 
         return this.productoRepository.save(nuevoProducto);
