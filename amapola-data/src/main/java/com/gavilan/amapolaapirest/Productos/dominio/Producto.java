@@ -35,6 +35,14 @@ public class Producto implements Serializable {
     @NotNull
     private Double precio;
 
+    /*
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_precio_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private TipoPrecio tipoPrecio;
+     */
+
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     @NotNull
@@ -44,6 +52,11 @@ public class Producto implements Serializable {
     @JoinColumn(name = "bolsa_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Bolsa bolsa;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoria_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Categoria categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

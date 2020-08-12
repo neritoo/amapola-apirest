@@ -1,4 +1,4 @@
-package com.gavilan.amapolaapirest.Autenticación.dominio;
+package com.gavilan.amapolaapirest.Productos.dominio;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,11 +8,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "categorias")
 @Data
-@Table(name = "roles")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rol implements Serializable {
+public class Categoria implements Serializable {
 
     private final static long serialVersionUID = 1L;
 
@@ -21,5 +21,4 @@ public class Rol implements Serializable {
     private Long id;
 
     private String nombre;
-
 }

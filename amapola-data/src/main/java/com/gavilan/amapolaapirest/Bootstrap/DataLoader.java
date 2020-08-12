@@ -4,17 +4,22 @@ import com.gavilan.amapolaapirest.Productos.dominio.EnStock;
 import com.gavilan.amapolaapirest.Productos.dominio.Estado;
 import com.gavilan.amapolaapirest.Productos.dominio.SinStock;
 import com.gavilan.amapolaapirest.Productos.dominio.StockMinimo;
-import com.gavilan.amapolaapirest.Productos.servicios.ProductoService;
+import com.gavilan.amapolaapirest.Productos.repositorios.EstadoRepository;
+import com.gavilan.amapolaapirest.Productos.repositorios.TipoPrecioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataLoader implements CommandLineRunner {
 
-    private final ProductoService productoService;
+    private final EstadoRepository estadoRepository;
+    private final TipoPrecioRepository tipoPrecioRepository;
 
-    public DataLoader(ProductoService productoService) {
-        this.productoService = productoService;
+
+    public DataLoader(EstadoRepository estadoRepository, TipoPrecioRepository tipoPrecioRepository) {
+        this.estadoRepository = estadoRepository;
+        this.tipoPrecioRepository = tipoPrecioRepository;
+
     }
 
     @Override
@@ -24,8 +29,20 @@ public class DataLoader implements CommandLineRunner {
         Estado stockMinimo = new StockMinimo();
         Estado sinStock = new SinStock();
 
-        this.productoService.guardarEstado(enStock);
-        this.productoService.guardarEstado(stockMinimo);
-        this.productoService.guardarEstado(sinStock);
+        this.estadoRepository.save(enStock);
+        this.estadoRepository.save(stockMinimo);
+        this.estadoRepository.save(sinStock);
+
+        /*
+        TipoPrecio gr100 = new Gramos100();
+        TipoPrecio unidad = new Unidad();
+
+        gr100.setNombre("100Gr");
+        unidad.setNombre("Unidad");
+
+        this.tipoPrecioRepository.save(gr100);
+        this.tipoPrecioRepository.save(unidad);
+
+         */
     }
 }
