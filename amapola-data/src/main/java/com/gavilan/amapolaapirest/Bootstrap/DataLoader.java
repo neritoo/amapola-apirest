@@ -5,7 +5,6 @@ import com.gavilan.amapolaapirest.Productos.dominio.Estado;
 import com.gavilan.amapolaapirest.Productos.dominio.SinStock;
 import com.gavilan.amapolaapirest.Productos.dominio.StockMinimo;
 import com.gavilan.amapolaapirest.Productos.repositorios.EstadoRepository;
-import com.gavilan.amapolaapirest.Productos.repositorios.TipoPrecioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +12,11 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements CommandLineRunner {
 
     private final EstadoRepository estadoRepository;
-    private final TipoPrecioRepository tipoPrecioRepository;
+    // private final TipoPrecioRepository tipoPrecioRepository;
 
 
-    public DataLoader(EstadoRepository estadoRepository, TipoPrecioRepository tipoPrecioRepository) {
+    public DataLoader(EstadoRepository estadoRepository) {
         this.estadoRepository = estadoRepository;
-        this.tipoPrecioRepository = tipoPrecioRepository;
-
     }
 
     @Override

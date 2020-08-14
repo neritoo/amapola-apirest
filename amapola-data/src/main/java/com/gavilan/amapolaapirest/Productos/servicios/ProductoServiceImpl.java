@@ -5,9 +5,9 @@ import com.gavilan.amapolaapirest.Productos.dominio.Bolsa;
 import com.gavilan.amapolaapirest.Productos.dominio.Categoria;
 import com.gavilan.amapolaapirest.Productos.dominio.EnStock;
 import com.gavilan.amapolaapirest.Productos.dominio.Producto;
-import com.gavilan.amapolaapirest.Productos.repositorios.BolsaRepository;
 import com.gavilan.amapolaapirest.Productos.repositorios.CategoriaRepository;
 import com.gavilan.amapolaapirest.Productos.repositorios.ProductoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,17 +15,12 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;
-    private final BolsaRepository bolsaRepository;
+    private final BolsaService bolsaService;
     private final CategoriaRepository categoriaRepository;
-
-    public ProductoServiceImpl(ProductoRepository productoRepository, BolsaRepository bolsaRepository, CategoriaRepository categoriaRepository) {
-        this.productoRepository = productoRepository;
-        this.bolsaRepository = bolsaRepository;
-        this.categoriaRepository = categoriaRepository;
-    }
 
     @Transactional
     @Override
@@ -34,8 +29,7 @@ public class ProductoServiceImpl implements ProductoService {
         Bolsa bolsa = null;
 
         if (producto.getBolsa() != null) {
-            bolsa = this.bolsaRepository.findById(producto.getBolsa().getId())
-                    .orElseThrow(() -> new ProductoException("No existe la bolsa: " + producto.getBolsa().getNombre()));
+            bolsa = this.bolsaService.obtenerBolsa(producto.getBolsa().getId());
         }
 
         /*
@@ -72,19 +66,6 @@ public class ProductoServiceImpl implements ProductoService {
 
         return this.productoRepository.findAll();
     }
-
-    @Transactional
-    @Override
-    public Bolsa registrarBolsa(Bolsa bolsa) {
-
-        Bolsa nuevaBolsa = new Bolsa();
-
-        nuevaBolsa.setNombre(bolsa.getNombre());
-        nuevaBolsa.setCapacidad(bolsa.getCapacidad());
-
-        return this.bolsaRepository.save(nuevaBolsa);
-    }
-
     /*
     Método a eliminar: Para probar el calcularSubTotal de la venta antes de crear la venta.
     @Override

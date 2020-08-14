@@ -2,7 +2,8 @@ package com.gavilan.amapolaapirest.Productos.controladores;
 
 import com.gavilan.amapolaapirest.Excepciones.ProductoException;
 import com.gavilan.amapolaapirest.Productos.dominio.Bolsa;
-import com.gavilan.amapolaapirest.Productos.servicios.ProductoService;
+import com.gavilan.amapolaapirest.Productos.servicios.BolsaService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +17,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class ControladorRegistrarBolsa {
 
-    private final ProductoService productoService;
-
-    public ControladorRegistrarBolsa(ProductoService productoService) {
-        this.productoService = productoService;
-    }
+    private final BolsaService bolsaService;
 
     @PostMapping("/productos/bolsas")
     public ResponseEntity<?> nuevaBolsa(@Valid @RequestBody Bolsa bolsa) {
@@ -31,7 +29,7 @@ public class ControladorRegistrarBolsa {
         Bolsa nuevaBolsa;
 
         try {
-            nuevaBolsa = this.productoService.registrarBolsa(bolsa);
+            nuevaBolsa = this.bolsaService.registrarBolsa(bolsa);
         } catch (ProductoException e) {
             response.put("mensaje", "Error al guardar la bolsa");
             response.put("error", e.getMessage());
