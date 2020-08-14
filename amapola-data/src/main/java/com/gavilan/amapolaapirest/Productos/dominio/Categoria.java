@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "categorias")
@@ -25,8 +26,8 @@ public class Categoria implements Serializable {
     @NotNull
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "subcategoria_id")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Subcategoria subcategoria;
+    private List<Subcategoria> subcategorias;
 }

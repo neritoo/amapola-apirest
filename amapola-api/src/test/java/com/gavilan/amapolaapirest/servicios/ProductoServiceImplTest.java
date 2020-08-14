@@ -71,7 +71,7 @@ class ProductoServiceImplTest {
     void obtenerCategorias() {
         List<Categoria> categorias = this.productoService.obtenerCategorias();
 
-        System.out.println(categorias);
+        log.info(categorias.toString());
     }
 
     /*
