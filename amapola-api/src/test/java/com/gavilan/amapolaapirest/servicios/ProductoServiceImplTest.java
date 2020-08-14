@@ -74,6 +74,19 @@ class ProductoServiceImplTest {
         log.info(categorias.toString());
     }
 
+    @Test
+    void obtenerProductosPorCategoria() {
+        List<Producto> productosPorCategoria = this.productoService.obtenerProductosPorCategoria(2L);
+
+        log.info(productosPorCategoria.toString());
+    }
+
+    @Test
+    void obtenerProductos() {
+
+        log.info(this.productoService.obtenerProductos().toString());
+    }
+
     /*
     Test a eliminar.
     @Test

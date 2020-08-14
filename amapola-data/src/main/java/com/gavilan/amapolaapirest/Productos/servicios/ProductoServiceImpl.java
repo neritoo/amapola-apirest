@@ -68,6 +68,15 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public List<Producto> obtenerProductosPorCategoria(Long categoriaId) {
+
+        Categoria categoria = this.categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new ProductoException("Categoria no existente con ID: " + categoriaId));
+
+        return this.productoRepository.findByCategoria(categoria);
+    }
+
+    @Override
     public Producto obtenerProducto(Long productoId) {
         return null;
     }

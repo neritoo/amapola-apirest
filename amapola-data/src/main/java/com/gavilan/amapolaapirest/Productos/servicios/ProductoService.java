@@ -11,6 +11,8 @@ public interface ProductoService {
 
     List<Producto> obtenerProductos();
 
+    List<Producto> obtenerProductosPorCategoria(Long categoriaId);
+
     Producto obtenerProducto(Long productoId);
 
     Categoria obtenerCategoria(Long categoriaId);
