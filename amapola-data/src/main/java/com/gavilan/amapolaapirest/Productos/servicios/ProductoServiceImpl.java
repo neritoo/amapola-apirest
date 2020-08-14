@@ -66,6 +66,22 @@ public class ProductoServiceImpl implements ProductoService {
 
         return this.productoRepository.findAll();
     }
+
+    @Override
+    public Producto obtenerProducto(Long productoId) {
+        return null;
+    }
+
+    @Override
+    public Categoria obtenerCategoria(Long categoriaId) {
+        return null;
+    }
+
+    @Override
+    public List<Categoria> obtenerCategorias() {
+        return this.categoriaRepository.findAll();
+    }
+
     /*
     Método a eliminar: Para probar el calcularSubTotal de la venta antes de crear la venta.
     @Override

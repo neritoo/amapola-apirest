@@ -6,5 +6,9 @@ INSERT INTO usuarios (username, contraseña, email, enabled, fecha_creacion) VAL
 INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES (1, 1);
 INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES (1, 2);
 
+INSERT INTO subcategorias (nombre) VALUES ('Hamburguesas');
+
 INSERT INTO categorias (nombre) VALUES ('Te');
 INSERT INTO categorias (nombre) VALUES ('Alfajores');
+INSERT INTO categorias (nombre, subcategoria_id) VALUES ('Hamburguesas de lenteja', 1);
+
