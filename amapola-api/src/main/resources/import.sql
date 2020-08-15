@@ -10,5 +10,5 @@ INSERT INTO categorias (nombre) VALUES ('Te');
 INSERT INTO categorias (nombre) VALUES ('Alfajores');
 INSERT INTO categorias (nombre) VALUES ('Fríos y Congelados');
 
-INSERT INTO subcategorias (nombre, categoria_id) VALUES ('Hamburguesas', 3);
+INSERT INTO subcategorias (nombre) VALUES ('Hamburguesas');
 

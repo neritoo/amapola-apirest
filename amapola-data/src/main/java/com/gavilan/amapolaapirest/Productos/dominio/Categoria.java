@@ -26,7 +26,7 @@ public class Categoria implements Serializable {
     @NotNull
     private String nombre;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Subcategoria> subcategorias;

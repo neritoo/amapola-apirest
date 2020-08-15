@@ -1,12 +1,10 @@
 package com.gavilan.amapolaapirest.Productos.servicios;
 
 import com.gavilan.amapolaapirest.Excepciones.ProductoException;
-import com.gavilan.amapolaapirest.Productos.dominio.Bolsa;
-import com.gavilan.amapolaapirest.Productos.dominio.Categoria;
-import com.gavilan.amapolaapirest.Productos.dominio.EnStock;
-import com.gavilan.amapolaapirest.Productos.dominio.Producto;
+import com.gavilan.amapolaapirest.Productos.dominio.*;
 import com.gavilan.amapolaapirest.Productos.repositorios.CategoriaRepository;
 import com.gavilan.amapolaapirest.Productos.repositorios.ProductoRepository;
+import com.gavilan.amapolaapirest.Productos.repositorios.SubcategoriaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +19,7 @@ public class ProductoServiceImpl implements ProductoService {
     private final ProductoRepository productoRepository;
     private final BolsaService bolsaService;
     private final CategoriaRepository categoriaRepository;
+    private final SubcategoriaRepository subcategoriaRepository;
 
     @Transactional
     @Override
@@ -30,6 +29,13 @@ public class ProductoServiceImpl implements ProductoService {
 
         if (producto.getBolsa() != null) {
             bolsa = this.bolsaService.obtenerBolsa(producto.getBolsa().getId());
+        }
+
+        Subcategoria subcategoria = null;
+
+        if (producto.getSubcategoria() != null) {
+            subcategoria = this.subcategoriaRepository.findById(producto.getSubcategoria().getId())
+                    .orElseThrow(() -> new ProductoException("Subcategoria no existente con ID: " + producto.getSubcategoria().getId()));
         }
 
         /*
@@ -55,6 +61,7 @@ public class ProductoServiceImpl implements ProductoService {
         nuevoProducto.setPrecio(producto.getPrecio());
         // nuevoProducto.setTipoPrecio(tipoPrecio);
         nuevoProducto.setCategoria(categoria);
+        nuevoProducto.setSubcategoria(subcategoria);
         nuevoProducto.setEstado(new EnStock());
 
         return this.productoRepository.save(nuevoProducto);
