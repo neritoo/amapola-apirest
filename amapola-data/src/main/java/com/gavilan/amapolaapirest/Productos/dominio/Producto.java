@@ -69,7 +69,7 @@ public class Producto implements Serializable {
     @JoinColumn(name = "estado_nombre")
     private Estado estado;
 
-    public Integer getBolsas() {
+    public Integer getCantidadBolsas() {
 
         if (bolsa == null) {
             return null;

@@ -2,6 +2,7 @@ package com.gavilan.amapolaapirest.Productos.servicios;
 
 import com.gavilan.amapolaapirest.Productos.dominio.Categoria;
 import com.gavilan.amapolaapirest.Productos.dominio.Producto;
+import com.gavilan.amapolaapirest.Productos.dominio.Subcategoria;
 
 import java.util.List;
 
@@ -11,11 +12,18 @@ public interface ProductoService {
 
     List<Producto> obtenerProductos();
 
-    List<Producto> obtenerProductosPorCategoria(Long categoriaId);
-
     Producto obtenerProducto(Long productoId);
+
+
+    List<Categoria> obtenerCategorias();
 
     Categoria obtenerCategoria(Long categoriaId);
 
-    List<Categoria> obtenerCategorias();
+    List<Producto> obtenerProductosPorCategoria(Long categoriaId);
+
+    List<Subcategoria> obtenerSubcategorias();
+
+    Subcategoria obtenerSubcategoria(Long subcategoriaId);
+
+    List<Producto> obtenerProductosPorSubcategoria(Long subcategoriaId);
 }

@@ -38,6 +38,8 @@ public class ProductoServiceImpl implements ProductoService {
                     .orElseThrow(() -> new ProductoException("Subcategoria no existente con ID: " + producto.getSubcategoria().getId()));
         }
 
+        Categoria categoria = this.categoriaRepository.findById(producto.getCategoria().getId())
+                .orElseThrow(() -> new ProductoException("No existe la categoría" + producto.getCategoria().getNombre()));
         /*
         TipoPrecio --> Implementado a travéz de Bolsa: Si tiene bolsa: Precio en gramos; else: Precio en unidad.
         TipoPrecio tipoPrecio = null;
@@ -49,8 +51,6 @@ public class ProductoServiceImpl implements ProductoService {
         }
          */
 
-        Categoria categoria = this.categoriaRepository.findById(producto.getCategoria().getId())
-                .orElseThrow(() -> new ProductoException("No existe la categoría" + producto.getCategoria().getNombre()));
 
         Producto nuevoProducto = new Producto();
 
@@ -59,7 +59,6 @@ public class ProductoServiceImpl implements ProductoService {
         nuevoProducto.setStock(producto.getStock());
         nuevoProducto.setBolsa(bolsa);
         nuevoProducto.setPrecio(producto.getPrecio());
-        // nuevoProducto.setTipoPrecio(tipoPrecio);
         nuevoProducto.setCategoria(categoria);
         nuevoProducto.setSubcategoria(subcategoria);
         nuevoProducto.setEstado(new EnStock());
@@ -75,27 +74,47 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<Producto> obtenerProductosPorCategoria(Long categoriaId) {
-
-        Categoria categoria = this.categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new ProductoException("Categoria no existente con ID: " + categoriaId));
-
-        return this.productoRepository.findByCategoria(categoria);
-    }
-
-    @Override
     public Producto obtenerProducto(Long productoId) {
-        return null;
-    }
-
-    @Override
-    public Categoria obtenerCategoria(Long categoriaId) {
-        return null;
+        return this.productoRepository.findById(productoId)
+                .orElseThrow(() -> new ProductoException("Producto no encontrado con ID: " + productoId));
     }
 
     @Override
     public List<Categoria> obtenerCategorias() {
         return this.categoriaRepository.findAll();
+    }
+
+    @Override
+    public Categoria obtenerCategoria(Long categoriaId) {
+        return this.categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new ProductoException("Categoria no encontrada con ID: " + categoriaId));
+    }
+
+    @Override
+    public List<Producto> obtenerProductosPorCategoria(Long categoriaId) {
+
+        Categoria categoria = this.obtenerCategoria(categoriaId);
+
+        return this.productoRepository.findByCategoria(categoria);
+    }
+
+    @Override
+    public List<Subcategoria> obtenerSubcategorias() {
+        return this.subcategoriaRepository.findAll();
+    }
+
+    @Override
+    public Subcategoria obtenerSubcategoria(Long subcategoriaId) {
+        return this.subcategoriaRepository.findById(subcategoriaId)
+                .orElseThrow(() -> new ProductoException("Subcategoria no encontrada con ID: " + subcategoriaId));
+    }
+
+    @Override
+    public List<Producto> obtenerProductosPorSubcategoria(Long subcategoriaId) {
+
+        Subcategoria subcategoria = this.obtenerSubcategoria(subcategoriaId);
+
+        return this.productoRepository.findBySubcategoria(subcategoria);
     }
 
     /*
