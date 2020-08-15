@@ -117,6 +117,14 @@ public class ProductoServiceImpl implements ProductoService {
         return this.productoRepository.findBySubcategoria(subcategoria);
     }
 
+    @Override
+    public List<Subcategoria> obtenerSubcategoriasPorCategoria(Long categoriaId) {
+
+        Categoria categoria = this.obtenerCategoria(categoriaId);
+
+        return categoria.getSubcategorias();
+    }
+
     /*
     Método a eliminar: Para probar el calcularSubTotal de la venta antes de crear la venta.
     @Override

@@ -26,4 +26,6 @@ public interface ProductoService {
     Subcategoria obtenerSubcategoria(Long subcategoriaId);
 
     List<Producto> obtenerProductosPorSubcategoria(Long subcategoriaId);
+
+    List<Subcategoria> obtenerSubcategoriasPorCategoria(Long categoriaId);
 }

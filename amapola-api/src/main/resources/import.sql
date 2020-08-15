@@ -9,6 +9,7 @@ INSERT INTO usuarios_roles (usuario_id, rol_id) VALUES (1, 2);
 INSERT INTO categorias (nombre) VALUES ('Te');
 INSERT INTO categorias (nombre) VALUES ('Alfajores');
 INSERT INTO categorias (nombre) VALUES ('Fríos y Congelados');
+INSERT INTO categorias (nombre) VALUES ('Cereales');
 
 INSERT INTO subcategorias (nombre, categoria_id) VALUES ('Hamburguesas', 3);
 

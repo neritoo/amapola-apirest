@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,28 @@ public class ControladorObtenerSubcategorias {
 
         if (subcategorias.size() <= 0) {
             response.put("mensaje", "No existen subcategorias en la base de datos");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(subcategorias, HttpStatus.OK);
+    }
+
+    @GetMapping("/productos/subcategorias/por-categoria/{categoriaId}")
+    public ResponseEntity<?> obtenerSubcategoriasPorCategoria(@PathVariable Long categoriaId) {
+
+        Map<String, Object> response = new HashMap<>();
+        List<Subcategoria> subcategorias;
+
+        try {
+            subcategorias = this.productoService.obtenerSubcategoriasPorCategoria(categoriaId);
+        } catch (ProductoException e) {
+            response.put("mensaje", "Erro al obtener las subcategorias");
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (subcategorias.size() <= 0) {
+            response.put("mensaje", "No existen subcategorias de esa categoría");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
