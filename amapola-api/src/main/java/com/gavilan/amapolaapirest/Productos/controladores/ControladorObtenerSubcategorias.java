@@ -58,11 +58,6 @@ public class ControladorObtenerSubcategorias {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (subcategorias.size() <= 0) {
-            response.put("mensaje", "No existen subcategorias de esa categoría");
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(subcategorias, HttpStatus.OK);
     }
 }

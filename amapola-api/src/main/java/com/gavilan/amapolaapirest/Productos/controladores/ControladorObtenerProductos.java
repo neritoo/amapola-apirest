@@ -45,11 +45,6 @@ public class ControladorObtenerProductos {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (productos.size() <= 0) {
-            response.put("mensaje", "No existen productos con esa categoría");
-            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-        }
-
         return new ResponseEntity<>(productos, HttpStatus.OK);
     }
 
