@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
+    private static final int STOCK_MINIMO_CANT = 30;
 
     private final ProductoRepository productoRepository;
     private final BolsaService bolsaService;
@@ -51,6 +52,7 @@ public class ProductoServiceImpl implements ProductoService {
         }
          */
 
+        Estado estado = this.getEstado(producto.getStock());
 
         Producto nuevoProducto = new Producto();
 
@@ -61,9 +63,20 @@ public class ProductoServiceImpl implements ProductoService {
         nuevoProducto.setPrecio(producto.getPrecio());
         nuevoProducto.setCategoria(categoria);
         nuevoProducto.setSubcategoria(subcategoria);
-        nuevoProducto.setEstado(new EnStock());
+        nuevoProducto.setEstado(estado);
 
         return this.productoRepository.save(nuevoProducto);
+    }
+
+    private Estado getEstado(Integer stock) {
+        if (stock <= STOCK_MINIMO_CANT && stock > 0) {
+            return new StockMinimo();
+        }
+        if (stock == 0) {
+            return new SinStock();
+        }
+
+        return new EnStock();
     }
 
     @Transactional(readOnly = true)
